@@ -66,3 +66,5 @@ group :test do
 end
 
 gem "erb-formatter", "~> 0.7.3"
+
+gem "phlex-rails", "~> 2.1"
