@@ -24,6 +24,9 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
