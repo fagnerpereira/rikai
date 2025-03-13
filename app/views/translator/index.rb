@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
 class Views::Translator::Index < Views::Base
+  include Phlex::Rails::Helpers::FormWith
+  include Phlex::Rails::Helpers::TurboFrameTag
+
   def view_template
-      div(class: "flex flex-col gap-4 w-full") do
-        div(class: "card card-md bg-neutral-100 border border-gray-300") do
-          div(class: "card-body") do
+    div(class: "flex flex-col gap-4 w-full") do
+      div(class: "card card-md bg-neutral-100 border border-gray-300") do
+        div(class: "card-body") do
+          form_with url: "/translator/translate", method: :post do |form|
             div(class: "mb-4") do
-              textarea(
-                class:
-                  "w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white",
+              form.textarea(
+                :text,
+                class: "textarea w-full",
                 rows: "3",
                 placeholder: "Enter text to translate"
               )
@@ -16,35 +20,12 @@ class Views::Translator::Index < Views::Base
             div(class: "flex flex-wrap items-center justify-between") do
               div(class: "w-full md:w-5/12 mb-3 md:mb-0") do
                 div(class: "relative") do
-                  select(
-                    class:
-                      "w-full p-3 border border-gray-300 rounded-md appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  ) do
-                    option(selected: "selected") { "Autodetect" }
-                    option { "English" }
-                    option { "Spanish" }
-                    option { "French" }
-                    option { "German" }
-                  end
-                  div(
-                    class:
-                      "absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
-                  ) do
-                    svg(
-                      class: "w-5 h-5 text-gray-400",
-                      fill: "none",
-                      stroke: "currentColor",
-                      viewbox: "0 0 24 24",
-                      xmlns: "http://www.w3.org/2000/svg"
-                    ) do |s|
-                      s.path(
-                        stroke_linecap: "round",
-                        stroke_linejoin: "round",
-                        stroke_width: "2",
-                        d: "M19 9l-7 7-7-7"
-                      )
-                    end
-                  end
+                  form.select(
+                    :source,
+                    [%w[English en-US], %w[Spanish es], %w[French fr], %w[German de]],
+                    {},
+                    class: "select"
+                  )
                 end
               end
               div(
@@ -68,43 +49,23 @@ class Views::Translator::Index < Views::Base
               end
               div(class: "w-full md:w-5/12 mb-3 md:mb-0") do
                 div(class: "relative") do
-                  select(
-                    class:
-                      "w-full p-3 border border-gray-300 rounded-md appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  ) do
-                    option(selected: "selected") { "English" }
-                    option { "Spanish" }
-                    option { "French" }
-                    option { "German" }
-                  end
-                  div(
-                    class:
-                      "absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
-                  ) do
-                    svg(
-                      class: "w-5 h-5 text-gray-400",
-                      fill: "none",
-                      stroke: "currentColor",
-                      viewbox: "0 0 24 24",
-                      xmlns: "http://www.w3.org/2000/svg"
-                    ) do |s|
-                      s.path(
-                        stroke_linecap: "round",
-                        stroke_linejoin: "round",
-                        stroke_width: "2",
-                        d: "M19 9l-7 7-7-7"
-                      )
-                    end
-                  end
+                  form.select(
+                    :target,
+                    [%w[English en-US], %w[Spanish es], %w[French fr], %w[German de]],
+                    {},
+                    class: "select"
+                  )
                 end
               end
             end
             div(class: "mt-4 flex justify-end") do
-              button(class: "btn btn-primary btn-lg") { "Search" }
+              button(class: "btn btn-primary btn-lg") { "Translate" }
             end
           end
         end
-        render Components::Translations.new
       end
+
+      turbo_frame_tag "translations"
+    end
   end
 end

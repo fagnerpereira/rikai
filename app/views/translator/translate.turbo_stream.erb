@@ -1,0 +1,4 @@
+<%= turbo_stream.replace(
+  "translations",
+  Components::Translations.new(data: @json["matches"]),
+) %>
