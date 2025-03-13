@@ -2,7 +2,7 @@
 
 class Components::Translations < Components::Base
   LANGUAGES = {
-    "en" => "English",
+    "en-US" => "English",
     "es" => "Spanish",
     "fr" => "French",
     "de" => "German"
