@@ -4,10 +4,12 @@ service: rikai
 # Name of the container image.
 image: fagnerfpr/rikai
 
+# <% require "dotenv"; Dotenv.load(".env") %>
+
 # Deploy to these servers.
 servers:
   web:
-    - 173.208.162.215
+    - <%= ENV["KAMAL_HOSTS"] %>
   # job:
   #   hosts:
   #     - 192.168.0.1
