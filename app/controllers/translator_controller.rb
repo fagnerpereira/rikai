@@ -1,3 +1,5 @@
+require "net/http"
+
 class TranslatorController < ApplicationController
   def index
     render Views::Translator::Index.new
