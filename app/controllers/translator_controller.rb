@@ -5,6 +5,7 @@ class TranslatorController < ApplicationController
     render Views::Translator::Index.new
   end
 
+
   def translate
     uri = URI("https://api.mymemory.translated.net/get")
     uri.query = {

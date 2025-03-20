@@ -1,2 +1,6 @@
 [tools]
 bun = "latest"
+ruby = "latest"
+
+[env]
+MISE_ENV_FILE = ".env"
